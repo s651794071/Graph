@@ -1,25 +1,25 @@
+package basic;
+
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
-import java.util.TreeSet;
 
-public class AdjSet {
+public class AdjList {
     private int V;
     private int E;
-    private TreeSet<Integer>[] adj; // TreeSet数组[TreeSet1, TreeSet2,...]
+    private LinkedList<Integer>[] adj; // 链表数组[LinkedList1, LinkedList2,...]
 
-    public AdjSet(String filename) {
+    public AdjList(String filename) {
         File file = new File(filename);
         try (Scanner scanner = new Scanner(file)) {
 
             V = scanner.nextInt();
             if (V < 0)
                 throw new IllegalArgumentException("V must be non-negative!");
-            adj = new TreeSet[V];
+            adj = new LinkedList[V];
             for (int i = 0; i < V; i++) {
-                adj[i] = new TreeSet<Integer>();
+                adj[i] = new LinkedList<Integer>();
             }
 
             E = scanner.nextInt();
@@ -67,15 +67,23 @@ public class AdjSet {
         return adj[v].contains(w);
     }
 
-    // 这里我们改成了Iterable接口是因为不需要让用户知道返回的是TreeSet还是LinkedList还是什么
-    public Iterable<Integer> adj(int v) {
+    /**
+     * 返回顶点v的所有的neighbor，即邻边的另一个顶点
+     * @param v 要查的顶点v
+     * @return 顶点v所有neighbor的list
+     */
+    public LinkedList<Integer> adj(int v) {
         validateVertex(v); // 不要忘记进行传入的顶点v的合法性判断
         return adj[v];
     }
 
+    /**
+     * 计算顶点v的degree，非常简单直接调用上面方法返回的list的size()
+     * @param v 要计算的顶点v
+     * @return 顶点v的degree
+     */
     public int degree(int v) {
-        validateVertex(v); // 这里我们要对顶点v的合法性进行判断，因为我们不像之前一样直接调用adj(v)了，现在用的是adj[v]
-        return adj[v].size(); // 用adj[v]的原因是adj(v)里返回的是Iterable接口，没有size()方法
+        return adj(v).size();
     }
 
     @Override
@@ -93,7 +101,7 @@ public class AdjSet {
     }
 
     public static void main(String[] args) {
-        AdjSet adjSet = new AdjSet("g.txt");
-        System.out.println(adjSet);
+        AdjList adjList = new AdjList("g.txt");
+        System.out.println(adjList);
     }
 }
