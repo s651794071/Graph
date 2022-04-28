@@ -11,7 +11,12 @@ public class GraphDFS {
     public GraphDFS(Graph G) {
         this.G = G;
         visited = new boolean[G.getV()];
-        dfs(0);
+//        这里有bug，如果不是连通图的话，单独的顶点不会被访问到
+//        dfs(0);
+        for (int v = 0; v < G.getV(); v++) {
+            if(!visited[v])
+                dfs(v);
+        }
     }
 
     private void dfs(int v) {
