@@ -58,7 +58,7 @@ public class AdjList {
         return E;
     }
 
-    // 查一下是否存在顶点v到顶点w的边
+    // 查一下是否存在顶点v到顶点w的边，即查看v和w是否相邻
     public boolean hasEdge(int v, int w) {
         // 记得进行合法性判断！
         validateVertex(v);
