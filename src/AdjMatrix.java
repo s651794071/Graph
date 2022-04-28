@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AdjMatrix {
@@ -43,6 +44,46 @@ public class AdjMatrix {
     private void validateVertex(int v) {
         if (v < 0 || v >= V)
             throw new IllegalArgumentException("vertex " + v + " is invalid");
+    }
+
+    public int getV() {
+        return V;
+    }
+
+    public int getE() {
+        return E;
+    }
+
+    // 查一下是否存在顶点v到顶点w的边
+    public boolean hasEdge(int v, int w) {
+        // 记得进行合法性判断！
+        validateVertex(v);
+        validateVertex(w);
+        return adj[v][w] == 1;
+    }
+
+    /**
+     * 返回顶点v的所有的neighbor，即邻边的另一个顶点
+     * @param v 要查的顶点v
+     * @return 顶点v所有neighbor的list
+     */
+    public ArrayList<Integer> adj(int v) {
+        validateVertex(v); // 不要忘记进行传入的顶点v的合法性判断
+        ArrayList<Integer> res = new ArrayList<>();
+        for (int i = 0; i < V; i++) {
+            if (adj[v][i] == 1)
+                res.add(i);
+        }
+        return res;
+    }
+
+    /**
+     * 计算顶点v的degree，非常简单直接调用上面方法返回的list的size()
+     * @param v 要计算的顶点v
+     * @return 顶点v的degree
+     */
+    public int degree(int v) {
+        return adj(v).size();
     }
 
     @Override
