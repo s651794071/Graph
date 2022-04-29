@@ -46,7 +46,7 @@ public class Graph {
      * 测试顶点v是否是有效的，假如 V = 5 ，但文件中某个 v 大于等于了5 （顶点序号从0开始） 就是不合法的
      * @param v 某个顶点的序号
      */
-    private void validateVertex(int v) {
+    public void validateVertex(int v) {
         if (v < 0 || v >= V)
             throw new IllegalArgumentException("vertex " + v + " is invalid");
     }
